@@ -9,6 +9,13 @@ import androidx.work.WorkManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Scanner;
+
+import javax.net.ssl.HttpsURLConnection;
+
 public class MainActivity extends AppCompatActivity {
 
     private OneTimeWorkRequest workRequest;
@@ -29,5 +36,18 @@ public class MainActivity extends AppCompatActivity {
 
                 }
         );
+    }
+
+    public void getDate() throws IOException {
+        String str = "Строка к API";
+        HttpsURLConnection connection;
+        URL url = new URL(str);
+        connection = (HttpsURLConnection) url.openConnection();
+        connection.setConnectTimeout(10000);
+        connection.connect();
+
+        // connection.getResponseCode() => 200
+        Scanner scanner = new Scanner(connection.getInputStream());
+
     }
 }
